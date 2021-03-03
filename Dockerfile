@@ -94,4 +94,6 @@ RUN echo "0 1 * * * root find /var/www/html/var/tmp -type f -mtime +1 -delete" >
 # enable cron service
 RUN mkdir -p /etc/services.d/cron
 RUN echo "#!/bin/sh \n /usr/sbin/cron -f" > /etc/services.d/cron/run && chmod +x /etc/services.d/cron/run
+RUN cd /usr/share && ln -s opencv4 opencv
+
 CMD ["/init"]
