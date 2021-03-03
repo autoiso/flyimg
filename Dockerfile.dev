@@ -73,23 +73,10 @@ ENV PORT 80
 
 WORKDIR /var/www/html
 
-COPY .    /var/www/html
-
-#add www-data + mdkdir var folder
-RUN usermod -u 1000 -s /bin/bash www-data && \
-    mkdir -p /var/www/html/var web/uploads/.tmb var/cache/ var/log/ && \
-    chown -R www-data:www-data var/  web/uploads/ && \
-    chmod 777 -R var/  web/uploads/
-
-RUN composer update --no-dev --optimize-autoloader
-
-# add cron to clear tmp dir
-#daily at 1 am
-RUN echo "0 1 * * * root find /var/www/html/var/tmp -type f -mtime +1 -delete" >> /etc/crontab
-# enable cron service
-RUN mkdir -p /etc/services.d/cron
-RUN echo "#!/bin/sh \n /usr/sbin/cron -f" > /etc/services.d/cron/run && chmod +x /etc/services.d/cron/run
+ADD resources/prepare_app.sh /prepare_app.sh
+RUN chmod +x /prepare_app.sh
 
 RUN cd /usr/share && ln -s opencv4 opencv
+RUN usermod -u 1000 -s /bin/bash www-data
 
-CMD ["/init"]
+CMD ["/prepare_app.sh"]
