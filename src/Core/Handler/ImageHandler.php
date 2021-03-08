@@ -6,6 +6,7 @@ use Core\Entity\AppParameters;
 use Core\Entity\Image\InputImage;
 use Core\Entity\OptionsBag;
 use Core\Entity\Image\OutputImage;
+use Core\Processor\BetterFaceDetectProcessor;
 use Core\Processor\ExtractProcessor;
 use Core\Processor\FaceDetectProcessor;
 use Core\Processor\SmartCropProcessor;
@@ -39,6 +40,9 @@ class ImageHandler
     /** @var AppParameters */
     protected $appParameters;
 
+    /** @var BetterFaceDetectProcessor */
+    protected $betterFaceDetectProcessor;
+
     /**
      * ImageHandler constructor.
      *
@@ -52,6 +56,7 @@ class ImageHandler
 
         $this->imageProcessor = new ImageProcessor();
         $this->faceDetectProcessor = new FaceDetectProcessor();
+        $this->betterFaceDetectProcessor = new BetterFaceDetectProcessor();
         $this->extractProcessor = new ExtractProcessor();
         $this->smartCropProcessor = new SmartCropProcessor();
         $this->securityHandler = new SecurityHandler($appParameters);
@@ -159,9 +164,13 @@ class ImageHandler
      */
     protected function processNewImage(OutputImage $outputImage): OutputImage
     {
-        //Check Extract options
         if ($outputImage->extractKey('extract')) {
             $this->extractProcess($outputImage);
+        }
+
+        $betterFaceBlur = $outputImage->extractKey('better-face-blur');
+        if ($betterFaceBlur && !$outputImage->isOutputGif()) {
+            $this->betterFaceDetectProcessor->blurFaces($outputImage);
         }
 
         $outputImage = $this->imageProcessor()->processNewImage($outputImage);

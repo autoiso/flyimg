@@ -4,7 +4,7 @@ application_name: Flyimg.io
 debug: true
 
 #Number of days for header cache expires `max_age`
-header_cache_days: 365
+#header_cache_days: 365
 
 #options separator
 options_separator: ","
@@ -50,6 +50,7 @@ options_keys:
   fc: face-crop
   fcp: face-crop-position
   fb: face-blur
+  bfb: better-face-blur
   w: width
   h: height
   c: crop
