@@ -1,7 +1,8 @@
 application_name: Flyimg.io
 
 #better face detect sensitivity
-bfb_sensitivity: 0.3
+bfb_sensitivity: 0.2
+bfb_max_picture_size: 1000
 
 #debug
 debug: true

@@ -13,7 +13,7 @@ $app = new Silex\Application();
 $app['params'] = new \Core\Entity\AppParameters(__DIR__ . '/config/parameters.yml');
 
 
-$app['env'] = $_ENV['env'] ?: 'dev';
+$app['env'] = @$_ENV['env'] ?: 'dev';
 $exceptionHandlerFunction = function (\Exception $e): void {
     $out = fopen('php://stdout', 'w');
     fputs(
