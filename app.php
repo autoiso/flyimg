@@ -1,7 +1,5 @@
 <?php
 
-define("ROOT_DIR", __DIR__);
-
 require_once __DIR__ . '/constants.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
