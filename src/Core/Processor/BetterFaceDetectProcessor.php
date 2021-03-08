@@ -21,8 +21,8 @@ class BetterFaceDetectProcessor extends Processor
     public function __construct()
     {
         $this->network = \CV\DNN\readNetFromCaffe(
-            ROOT_DIR.'/models/ssd/res10_300x300_ssd_deploy.prototxt',
-            ROOT_DIR.'/models/ssd/res10_300x300_ssd_iter_140000.caffemodel'
+            ROOT_DIR . '/models/ssd/res10_300x300_ssd_deploy.prototxt',
+            ROOT_DIR . '/models/ssd/res10_300x300_ssd_iter_140000.caffemodel'
         );
     }
 
@@ -48,15 +48,15 @@ class BetterFaceDetectProcessor extends Processor
         $r = $this->network->forward();
 
         for ($i = 0; $i < $r->shape[2]; $i++) {
-            $confidence = $r->atIdx([0,0,$i,2]);
+            $confidence = $r->atIdx([0, 0, $i, 2]);
             if ($confidence > 0.3) {
-                $startX = round($r->atIdx([0,0,$i,3]) * $src->cols);
-                $startY = round($r->atIdx([0,0,$i,4]) * $src->rows);
-                $endX = round($r->atIdx([0,0,$i,5]) * $src->cols);
-                $endY = round($r->atIdx([0,0,$i,6]) * $src->rows);
+                $startX = round($r->atIdx([0, 0, $i, 3]) * $src->cols);
+                $startY = round($r->atIdx([0, 0, $i, 4]) * $src->rows);
+                $endX = round($r->atIdx([0, 0, $i, 5]) * $src->cols);
+                $endY = round($r->atIdx([0, 0, $i, 6]) * $src->rows);
 
-                $geometryW = abs($startX-$endX);
-                $geometryH = abs($startY-$endY);
+                $geometryW = abs($startX - $endX);
+                $geometryH = abs($startY - $endY);
 
                 $blurCmd = new Command(self::IM_MOGRIFY_COMMAND);
                 $blurCmd->addArgument("-gravity", "NorthWest");
