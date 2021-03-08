@@ -16,15 +16,19 @@ class BetterFaceDetectProcessor extends Processor
      */
     private $network;
 
-    private $personBoxes = [];
+    /**
+     * @var float|mixed
+     */
+    private $sensitivity;
 
-    public function __construct()
+    public function __construct($sensitivity = 0.3)
     {
+        $this->sensitivity = $sensitivity;
         $this->network = \CV\DNN\readNetFromCaffe(
             ROOT_DIR . '/models/ssd/res10_300x300_ssd_deploy.prototxt',
             ROOT_DIR . '/models/ssd/res10_300x300_ssd_iter_140000.caffemodel'
         );
-    }
+;    }
 
 
     /**
@@ -49,7 +53,7 @@ class BetterFaceDetectProcessor extends Processor
 
         for ($i = 0; $i < $r->shape[2]; $i++) {
             $confidence = $r->atIdx([0, 0, $i, 2]);
-            if ($confidence > 0.3) {
+            if ($confidence > $this->sensitivity) {
                 $startX = round($r->atIdx([0, 0, $i, 3]) * $src->cols);
                 $startY = round($r->atIdx([0, 0, $i, 4]) * $src->rows);
                 $endX = round($r->atIdx([0, 0, $i, 5]) * $src->cols);

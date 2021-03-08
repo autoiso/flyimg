@@ -56,7 +56,7 @@ class ImageHandler
 
         $this->imageProcessor = new ImageProcessor();
         $this->faceDetectProcessor = new FaceDetectProcessor();
-        $this->betterFaceDetectProcessor = new BetterFaceDetectProcessor();
+        $this->betterFaceDetectProcessor = new BetterFaceDetectProcessor($appParameters->parameterByKey('bfb_sensitivity'));
         $this->extractProcessor = new ExtractProcessor();
         $this->smartCropProcessor = new SmartCropProcessor();
         $this->securityHandler = new SecurityHandler($appParameters);

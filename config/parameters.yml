@@ -1,10 +1,13 @@
 application_name: Flyimg.io
 
+#better face detect sensitivity
+bfb_sensitivity: 0.3
+
 #debug
 debug: true
 
 #Number of days for header cache expires `max_age`
-#header_cache_days: 365
+header_cache_days: 365
 
 #options separator
 options_separator: ","
