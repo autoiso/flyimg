@@ -1,5 +1,9 @@
 application_name: Flyimg.io
 
+#better face detect sensitivity
+bfb_sensitivity: 0.2
+bfb_max_picture_size: 1000
+
 #debug
 debug: true
 
@@ -50,6 +54,7 @@ options_keys:
   fc: face-crop
   fcp: face-crop-position
   fb: face-blur
+  bfb: better-face-blur
   w: width
   h: height
   c: crop
