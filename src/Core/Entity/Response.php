@@ -55,15 +55,15 @@ class Response extends BaseResponse
         $this->setSharedMaxAge($longCacheTime);
         $this->setPublic();
 
-        if ($image->getInputImage()->optionsBag()->get('refresh')) {
-            $this->headers->set('Cache-Control', 'no-cache, private');
-            $this->setExpires(null)->expire();
-
-            $this->headers->set('im-identify', $this->imageHandler->imageProcessor()->imageIdentityInformation($image));
-            $this->headers->set('im-command', $image->getCommandString());
-        }
-
-        $this->headers->set('Last-Modified', $this->getLastModifiedDate($image));
+//        if ($image->getInputImage()->optionsBag()->get('refresh')) {
+//            $this->headers->set('Cache-Control', 'no-cache, private');
+//            $this->setExpires(null)->expire();
+//
+//            $this->headers->set('im-identify', $this->imageHandler->imageProcessor()->imageIdentityInformation($image));
+//            $this->headers->set('im-command', $image->getCommandString());
+//        }
+//
+//        $this->headers->set('Last-Modified', $this->getLastModifiedDate($image));
     }
 
     /**

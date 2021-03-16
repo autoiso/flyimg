@@ -105,7 +105,7 @@ default_options:
   rotate: null
   scale: null
   sampling-factor: 1x1
-  refresh: false
+  refresh: true
   smart-crop: false
   extent: null
   preserve-aspect-ratio: 1
