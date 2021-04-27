@@ -4,6 +4,19 @@ application_name: Flyimg.io
 bfb_sensitivity: 0.2
 bfb_max_picture_size: 1000
 
+#text detect settings
+tb_settings:
+  nocache_param: nocache
+  nocache_param_value: 1
+  pg_table_name: text_detect_results
+  blur_factor: "0x5"
+tb_match_patterns:
+  - /^otomoto$/i
+  - /^отомото$/i
+  - /^mobile\.de$/i
+  - /^iaai$/i
+  - /^carsontheweb$/i
+
 #debug
 debug: true
 
@@ -55,6 +68,7 @@ options_keys:
   fcp: face-crop-position
   fb: face-blur
   bfb: better-face-blur
+  tb: text-blur
   w: width
   h: height
   c: crop
