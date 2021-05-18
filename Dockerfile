@@ -2,13 +2,15 @@ FROM ubuntu:20.04 AS flyimg-builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update -y && apt-get -y --no-install-recommends install software-properties-common && \
+RUN apt-get update -y && apt-get -y --no-install-recommends install software-properties-common curl apt-transport-https ca-certificates gnupg && \
     add-apt-repository -y ppa:ondrej/php && \
+    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
     apt-get update -y && apt-get -y --no-install-recommends install \
-    wget curl nginx zip unzip imagemagick webp libmagickwand-dev libyaml-dev \
+    wget nginx zip unzip imagemagick webp libmagickwand-dev libyaml-dev \
     python3 python3-numpy libopencv-dev python3-setuptools opencv-data \
     gcc nasm build-essential make cmake wget vim git \
-    php7.4-cli php7.4-fpm php7.4-gd php7.4-yaml php7.4-imagick php7.4-xdebug pkg-config php7.4-dev php7.4-xml php7.4-mbstring \
+    php7.4-cli php7.4-fpm php7.4-gd php7.4-yaml php7.4-imagick php7.4-xdebug pkg-config php7.4-dev php7.4-xml php7.4-mbstring php7.4-pgsql php7.4-bcmath \
+    google-cloud-sdk \
     ghostscript cron ffmpeg && \
     rm -rf /var/lib/apt/lists/*
 

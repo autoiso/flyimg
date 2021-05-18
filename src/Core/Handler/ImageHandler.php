@@ -11,6 +11,7 @@ use Core\Processor\ExtractProcessor;
 use Core\Processor\FaceDetectProcessor;
 use Core\Processor\SmartCropProcessor;
 use Core\Processor\ImageProcessor;
+use Core\Processor\TextDetectProcessor;
 use League\Flysystem\Filesystem;
 
 /**
@@ -43,6 +44,9 @@ class ImageHandler
     /** @var BetterFaceDetectProcessor */
     protected $betterFaceDetectProcessor;
 
+    /** @var TextDetectProcessor */
+    protected $textDetectProcessor;
+
     /**
      * ImageHandler constructor.
      *
@@ -59,6 +63,10 @@ class ImageHandler
         $this->betterFaceDetectProcessor = new BetterFaceDetectProcessor(
             $appParameters->parameterByKey('bfb_sensitivity'),
             $appParameters->parameterByKey('bfb_max_picture_size')
+        );
+        $this->textDetectProcessor = new TextDetectProcessor(
+            $appParameters->parameterByKey('tb_settings'),
+            $appParameters->parameterByKey('tb_match_patterns')
         );
         $this->extractProcessor = new ExtractProcessor();
         $this->smartCropProcessor = new SmartCropProcessor();
@@ -169,6 +177,12 @@ class ImageHandler
     {
         if ($outputImage->extractKey('extract')) {
             $this->extractProcess($outputImage);
+        }
+
+        // first - because of cache based on hash file
+        $textBlur = $outputImage->extractKey('text-blur');
+        if ($textBlur && !$outputImage->isOutputGif()) {
+            $this->textDetectProcessor->blurTexts($outputImage);
         }
 
         $betterFaceBlur = $outputImage->extractKey('better-face-blur');

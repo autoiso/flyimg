@@ -1,0 +1,5 @@
+DB_PDO_DSN=pgsql:host=fi_dev_postgres;port=5432;dbname=fi_dev
+DB_PDO_USER=fi_dev
+DB_PDO_PASSWORD=fi_dev
+GOOGLE_APPLICATION_CREDENTIALS=/var/www/html/resources/google-cloud/credentials.json
+S6_KEEP_ENV=1
